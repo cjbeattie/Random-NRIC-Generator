@@ -1,7 +1,6 @@
 const express = require('express');
-// const { body, validationResult } = require("express-validator");
-// const { StatusCodes } = require("http-status-codes");
-// const _ = require('lodash');
+const { body, validationResult } = require("express-validator");
+const { StatusCodes } = require("http-status-codes");
 const axios = require("axios");
 const NRIC = require('../models/NRIC_Model');
 
@@ -12,8 +11,16 @@ const router = express.Router();
 // CREATE
 router.post(
     "/",
-    // body("category", "Min Length of 3").trim().isLength({ min: 3 }),
-    // body("score", "Must be a number").trim().isNumeric().isLength({ max: 3 }),
+    body("NRIC")
+        .trim().isLength({ min: 9, max: 9 }).withMessage('NRIC length must be 9 characters')
+        .matches(/[STFG]\d{7}[A-Z]/).withMessage('Contains invalid characters')
+        .custom(value => {
+            return User.findUserByEmail(value).then(user => {
+                if (user) {
+                    return Promise.reject('NRIC already exists');
+                }
+            });
+        }),
     (req, res) => {
         const errors = validationResult(req);
 
@@ -21,7 +28,7 @@ router.post(
             // There are errors.
             // Errors are returned in an array using `errors.array()`.
             const locals = { nric: req.body, errors: errors.array() };
-            res.status(StatusCodes.BAD_REQUEST).send(locals);
+            res.status(StatusCodes.BAD_REQUEST).json(locals);
         } else {
             // Data from form is valid.
             const formData = req.body; // extract the data from POST
@@ -36,7 +43,6 @@ router.post(
         }
     }
 );
-
 
 
 // DELETE
