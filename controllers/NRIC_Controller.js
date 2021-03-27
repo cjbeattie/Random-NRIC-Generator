@@ -1,7 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require("express-validator");
 const { StatusCodes } = require("http-status-codes");
-const axios = require("axios");
 const NRIC = require('../models/NRIC_Model');
 
 
