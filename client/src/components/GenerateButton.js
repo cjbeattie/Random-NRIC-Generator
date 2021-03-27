@@ -1,21 +1,13 @@
-import React from 'react';
 import { Button } from 'antd';
 
-const GenerateButton = () => {
-    const [loading, setLoading] = React.useState(false);
-
-    const handleClick = () => {
-        setLoading(true);
-    }
-
+const GenerateButton = (props) => {
     return (
         <>
-            <Button type="primary" loading={loading} onClick={handleClick}>
-                Click me!
-                </Button>
+            <Button type="primary" loading={props.loading} onClick={props.handleClick}>
+                Generate NRIC
+            </Button>
         </>
     );
-
 }
 
 export default GenerateButton;
