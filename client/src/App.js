@@ -1,11 +1,14 @@
-import './App.css';
-// import { Button } from 'antd';
-import GenerateButton from './components/GenerateButton'
+import { Divider } from 'antd';
+import MainPage from './components/MainPage'
 import 'antd/dist/antd.css';
+import './App.css';
+
 
 function App() {
   return (
-    <GenerateButton />
+    <>
+      <MainPage />
+    </>
   );
 }
 
