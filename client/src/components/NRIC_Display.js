@@ -1,8 +1,8 @@
 import { Input } from 'antd';
 
-const NRIC_Display = () => {
+const NRIC_Display = (props) => {
     return (
-        <Input placeholder="NRIC!" disabled="true" />
+        <Input placeholder={props.currentNRIC} disabled="true" />
     )
 }
 

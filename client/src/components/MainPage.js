@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 import { Layout, Menu, Breadcrumb, Divider, Typography, Space } from 'antd';
 import GenerateButton from './GenerateButton'
 import NRIC_Display from './NRIC_Display'
@@ -9,9 +10,21 @@ const { Title, Text } = Typography;
 
 const MainPage = () => {
     const [loading, setLoading] = React.useState(false);
+    const [currentNRIC, setCurrentNRIC] = React.useState("Click the button to generate a new NRIC");
 
     const handleClick = () => {
         setLoading(true);
+
+        axios.get('/api/nric')
+            .then((res) => {
+                console.log("Add successful");
+                setLoading(false);
+                setCurrentNRIC(res)
+            })
+            .catch((error) => {
+                console.log("Error", error);
+                setLoading(false);
+            })
     }
 
 
@@ -25,7 +38,7 @@ const MainPage = () => {
                     {/* <Space direction="vertical"></Space> */}
                     <GenerateButton loading={loading} handleClick={handleClick} />
                     <Divider />
-                    <NRIC_Display />
+                    <NRIC_Display currentNRIC={currentNRIC} />
 
                 </div>
             </Content>
