@@ -12,6 +12,7 @@ Ant Design for UI
 
 ## Approach
 This is a simple full-stack web application. When the "Generate NRIC" button is clicked, a request is sent to the server, which in turn generates a random NRIC and attempts to add it to a MongoDB database. If a duplicate exists, it will attempt to generate and add another NRIC until successful. Once successful, the NRIC is then returned to React and displayed in the textbox.
+Features a loading indicator on the Generate NRIC button when request is in progress.
 
 ## Local Installation Instructions
 (requires installation of [Node.js/npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [MongoDB](https://docs.mongodb.com/manual/administration/install-community/))
