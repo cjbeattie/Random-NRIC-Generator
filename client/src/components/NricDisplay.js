@@ -2,7 +2,7 @@ import { Input } from 'antd';
 
 const NricDisplay = (props) => {
     return (
-        <Input placeholder={props.currentNRIC} disabled={true} />
+        <Input value={props.currentNRIC} />
     )
 }
 
