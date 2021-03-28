@@ -11,22 +11,22 @@ const { Text } = Typography;
 const MainPage = () => {
     const [loading, setLoading] = React.useState(false);
     const [currentNRIC, setCurrentNRIC] = React.useState("Click the button to generate a new NRIC");
+    const [errorMessage, setErrorMessage] = React.useState("");
 
     const handleClick = () => {
         setLoading(true);
 
         axios.get('/api/nric')
             .then((res) => {
-                console.log("Add successful: ", res);
                 setLoading(false);
                 setCurrentNRIC(res.data.NRIC)
             })
             .catch((error) => {
-                console.log("Error", error);
                 setLoading(false);
+                setErrorMessage("An error has occurred, please try again. Error message: ", error);
+                console.log("Error", error);
             })
     }
-
 
     return (
         <Layout className="layout" style={{ height: "100vh" }}>
@@ -35,11 +35,15 @@ const MainPage = () => {
             </Header>
             <Content style={{ padding: '50px', textAlign: 'center' }}>
                 <div className="site-layout-content">
-                    {/* <Space direction="vertical"></Space> */}
                     <GenerateButton loading={loading} handleClick={handleClick} />
                     <Row justify="center" style={{ padding: '20px' }} >
                         <Col span={4}>
                             <NricDisplay currentNRIC={currentNRIC} />
+                        </Col>
+                    </Row>
+                    <Row justify="center" >
+                        <Col span={4}>
+                            <Text style={{ color: 'red' }}>{errorMessage}</Text>
                         </Col>
                     </Row>
 
