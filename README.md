@@ -11,7 +11,12 @@ Ant Design
 
 
 ## Approach
-This is a simple full-stack web application. When the "Generate NRIC" button is clicked, a request is sent to the server, which in turn generates a random NRIC and attempts to add it to a MongoDB database. If a duplicate exists, it will attempt another NRIC until successful. Once successful, the NRIC is then returned to React and displayed in the textbox.
+This is a simple full-stack web application. When the "Generate NRIC" button is clicked, a request is sent to the server, which in turn generates a random NRIC and attempts to add it to a MongoDB database. If a duplicate exists, it will attempt to generate and add another NRIC until successful. Once successful, the NRIC is then returned to React and displayed in the textbox.
 
-## Installation instructions
-`npm i` in root folder and in client folder.
+## Local Installation Instructions
+(requires installation of [Node.js/npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [MongoDB](https://docs.mongodb.com/manual/administration/install-community/))
+- Download source code
+- In your terminal application, `npm i` in root folder and in client folder.
+- To start the server, go to the root folder and run `nodemon server.js`
+- To start the client, go to the client folder and run `npm start`
+- The application will run on http://localhost:3000/
