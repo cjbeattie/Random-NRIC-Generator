@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from "axios";
-import { Layout, Menu, Breadcrumb, Divider, Typography, Space } from 'antd';
+import { Layout, Divider, Typography, Row, Col } from 'antd';
 import GenerateButton from './GenerateButton'
-import NRIC_Display from './NRIC_Display'
+import NricDisplay from './NricDisplay'
 
 const { Header, Content, Footer } = Layout;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 
 const MainPage = () => {
@@ -19,7 +19,7 @@ const MainPage = () => {
             .then((res) => {
                 console.log("Add successful: ", res);
                 setLoading(false);
-                setCurrentNRIC(res)
+                setCurrentNRIC(res.data.NRIC)
             })
             .catch((error) => {
                 console.log("Error", error);
@@ -29,20 +29,27 @@ const MainPage = () => {
 
 
     return (
-        <Layout className="layout">
+        <Layout className="layout" style={{ height: "100vh" }}>
             <Header>
                 <Text strong style={{ color: 'white', fontSize: 20 }}> Random NRIC Generator</Text>
             </Header>
-            <Content style={{ padding: '0 50px', textAlign: 'center' }}>
+            <Content style={{ padding: '50px', textAlign: 'center' }}>
                 <div className="site-layout-content">
                     {/* <Space direction="vertical"></Space> */}
                     <GenerateButton loading={loading} handleClick={handleClick} />
-                    <Divider />
-                    <NRIC_Display currentNRIC={currentNRIC} />
+                    <Row justify="center" style={{ padding: '20px' }} >
+                        <Col span={4}>
+                            <NricDisplay currentNRIC={currentNRIC} />
+                        </Col>
+                    </Row>
+
 
                 </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Footer style={{ textAlign: 'center' }}>
+                <Divider />
+                Created by <a href="https://github.com/cjbeattie">Courtney Beattie</a>
+            </Footer>
         </Layout>
     )
 }
