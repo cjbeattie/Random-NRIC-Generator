@@ -24,7 +24,7 @@ const MainPage = () => {
             .catch((error) => {
                 setLoading(false);
                 setErrorMessage("An error occurred, please try again.");
-                console.log("Error", error);
+                console.log("An error occurred: ", error);
             })
     }
 
