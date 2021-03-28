@@ -17,7 +17,7 @@ const MainPage = () => {
 
         axios.get('/api/nric')
             .then((res) => {
-                console.log("Add successful");
+                console.log("Add successful: ", res);
                 setLoading(false);
                 setCurrentNRIC(res)
             })
