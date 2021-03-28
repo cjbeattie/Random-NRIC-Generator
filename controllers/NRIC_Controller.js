@@ -1,12 +1,11 @@
 const express = require('express');
-// const { body, validationResult } = require("express-validator");
 const { StatusCodes } = require("http-status-codes");
 const NRIC = require('../models/NRIC_Model');
 
 
 const router = express.Router();
 
-const myFunction = async (req, res) => {
+const createNric = async (req, res) => {
     let duplicateError = false;
     let created = false;
     let randomNRIC;
@@ -18,7 +17,7 @@ const myFunction = async (req, res) => {
         // Generate random NRIC
         randomNRIC = { NRIC: `S111111${temp}H` }
 
-        created = await createNric(randomNRIC);
+        created = await addNricToMongoDB(randomNRIC);
 
         if (created) {
             break;
@@ -35,15 +34,7 @@ const myFunction = async (req, res) => {
 
 }
 
-// CREATE
-router.get(
-    "/",
-    myFunction
-);
-
-
-
-async function createNric(randomNric) {
+async function addNricToMongoDB(randomNric) {
 
     let result = false;
     try {
@@ -58,5 +49,10 @@ async function createNric(randomNric) {
     }
     return result;
 }
+
+router.get(
+    "/",
+    createNric
+);
 
 module.exports = router;
