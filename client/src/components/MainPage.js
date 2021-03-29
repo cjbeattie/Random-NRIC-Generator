@@ -19,7 +19,7 @@ const MainPage = () => {
         axios.get('/api/nric')
             .then((res) => {
                 setLoading(false);
-                setCurrentNRIC(res.data.NRIC)
+                setCurrentNRIC(res.data)
             })
             .catch((error) => {
                 setLoading(false);
@@ -37,7 +37,7 @@ const MainPage = () => {
                 <div className="site-layout-content">
                     <GenerateButton loading={loading} handleClick={handleClick} />
                     <Row justify="center" style={{ padding: '20px' }} >
-                        <Col span={4}>
+                        <Col span={5}>
                             <NricDisplay currentNRIC={currentNRIC} />
                         </Col>
                     </Row>

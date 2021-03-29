@@ -1,7 +1,7 @@
 const express = require('express');
 const { StatusCodes } = require("http-status-codes");
 const NRIC = require('../models/NRIC_Model');
-
+const { generateRandomNric } = require('./generator')
 
 const router = express.Router();
 
@@ -10,27 +10,30 @@ const createNricNoDuplicates = async (req, res) => {
     let created = false;
     let randomNRIC;
 
-    do {
-        console.log("In the loop")
+    try {
+        do {
+            randomNRIC = generateRandomNric();
 
-        randomNRIC = generateRandomNric();
+            const nricDoc = { NRIC: randomNRIC };
 
-        created = await addNricToMongoDB(randomNRIC);
+            created = await addNricToMongoDB(nricDoc);
 
-        if (created) {
-            break;
-        } else {
-            duplicateError = true;
-            temp++;
-        }
+            if (created) {
+                break;
+            } else {
+                duplicateError = true;
+            }
 
-    } while (duplicateError = true);
+        } while (duplicateError = true);
 
-    if (created) {
         res.status(StatusCodes.CREATED).send(randomNRIC);
+
+    } catch (e) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e);
     }
 
-}
+
+};
 
 async function addNricToMongoDB(randomNric) {
 
@@ -38,7 +41,6 @@ async function addNricToMongoDB(randomNric) {
     try {
         result = await NRIC.create(randomNric);
     } catch (e) {
-        console.log(e);
         if (e.code === 11000) {
             result = false;
         } else {
@@ -46,23 +48,8 @@ async function addNricToMongoDB(randomNric) {
         }
     }
     return result;
-}
+};
 
-const generateRandomNric = () => {
-    const firstLettersBank = "STFG";
-    const middleNumbersBank = "0123456789";
-    const lastLettersBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    let firstLetter = firstLettersBank[Math.floor(Math.random() * firstLettersBank.length)];
-    let middleNumbers = "";
-    let lastLetter = lastLettersBank[Math.floor(Math.random() * lastLettersBank.length)];
-
-    for (let i = 0; i < 7; i++) {
-        middleNumbers += middleNumbersBank[Math.floor(Math.random() * middleNumbersBank.length)];
-    }
-
-    return { NRIC: `${firstLetter}${middleNumbers}${lastLetter}` };
-}
 
 router.get(
     "/",
